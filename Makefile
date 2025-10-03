@@ -1,17 +1,12 @@
-ASM=ca65
-LD=ld65
-ASMFLAGS=-t nes
-LDFLAGS=-C cfg/nes.cfg
-SRC_DIR=src/
-BUILD_dir=build/
+CC=cl65
+SRC_DIR=src
+BUILD_DIR=build
+NESFILE=nesgame.nes
 
-all: nesgame.nes
+all: $(NESFILE)
 
-main.o: src/main.c
-    $(ASM) $(ASMFLAGS) $< -o $@
-
-nesgame.nes: main.o
-    $(LD) $(LDFLAGS) $< -o $@
+$(NESFILE): $(SRC_DIR)/main.c
+	$(CC) -t nes -O -o $@ $<
 
 clean:
-    rm -f *.o nesgame.nes
+	rm -f $(NESFILE) $(BUILD_DIR)/*.o
